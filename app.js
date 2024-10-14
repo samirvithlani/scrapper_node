@@ -9,7 +9,12 @@ const PORT = 3000;
 app.get('/open-google', async (req, res) => {
   try {
     // Launch a new browser instance
-    const browser = await puppeteer.launch({ headless: false }); // Open the browser window (not headless)
+    //const browser = await puppeteer.launch({ headless: true }); // Open the browser window (not headless)
+    const browser = await puppeteer.launch({
+      headless: true, // Ensure this is set in production
+      args: ['--no-sandbox', '--disable-setuid-sandbox'], // For Puppeteer to run in a containerized environment
+    });
+    
     
     // Open a new page
     const page = await browser.newPage();
